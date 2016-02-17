@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ssd_example_ssd_style
+    - node.type.email_teachings
+    - taxonomy.vocabulary.ssd_example_ssd_styles
+id: node.ssd_example_ssd.field_ssd_example_ssd_style
+field_name: field_ssd_example_ssd_style
+entity_type: node
+bundle: email_teachings
+label: 'Migrate Example Ssd Styles'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      ssd_example_ssd_styles: ssd_example_ssd_styles
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

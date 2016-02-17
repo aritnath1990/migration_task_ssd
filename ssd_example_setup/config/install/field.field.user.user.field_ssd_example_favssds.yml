@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_ssd_example_favssds
+    - node.type.email_teachings
+  module:
+    - user
+id: user.user.field_ssd_example_favssds
+field_name: field_ssd_example_favssds
+entity_type: user
+bundle: user
+label: 'Favorite ssds'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      email_teachings: email_teachings
+    sort:
+      field: title
+      direction: ASC
+field_type: entity_reference
