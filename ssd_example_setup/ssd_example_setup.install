@@ -45,14 +45,12 @@ function ssd_example_ssd_schema_node() {
         'description' => 'Full description.',
       ),
       'abstract' => array(
-        'type' => 'varchar',
-        'length' => 255,
+        'type' => 'text',
         'not null' => FALSE,
         'description' => 'p',
       ),
       'article' => array(
-        'type' => 'varchar',
-        'length' => 255,
+        'type' => 'text',
         'not null' => FALSE,
         'description' => 'a',
       ),
@@ -184,22 +182,27 @@ function ssd_example_ssd_schema_account() {
 }
 
 function ssd_example_ssd_data_node() {
-   $fields = array('bbid', 'title', 'dt_created','abstract','article','aid');
+ 
+  $q1 = db_select('res_manager', 'r');
+  $obj=$q1->fields('r',array('id','title','dt_created','abstract','article'))//SELECT 
+        ->condition('category_id', '20')
+        ->execute()->fetchAll();
+  
+  $i=0;
+  foreach ( $obj as $obj1 ) {
+    $data[$i][0]=$obj1->id;
+    $data[$i][1]=$obj1->title;
+    $data[$i][2]=$obj1->dt_created;
+    $data[$i][3]=$obj1->abstract;
+    $data[$i][4]=$obj1->article;
+    $data[$i][5]=1;
+    $i+=1;
+
+  }
+  $fields = array('bbid', 'title', 'dt_created','abstract','article','aid');
   $query = db_insert('ssd_example_ssd_node')
            ->fields($fields);
-  // Use high id numbers to avoid overwriting an existing node id.
-  $data = array(
-    array(1, 'Partha','2010-10-09 00:00:00','Lama Shenpen responds to a student questions about a sense of movement','Lama Shenpen responds to a student questions about a sense of movement',1), // comes with ssd_example project.
-    array(2, 'Subojit','2010-10-09 00:00:00','Lama Shenpen responds to a student questions about a sense of movement','Lama Shenpen responds to a student questions about a sense of movement',3),
-    array(3, 'Abhishek','2010-10-09 00:00:00','Lama Shenpen responds to a student questions about a sense of movement','Lama Shenpen responds to a students questions about a sense of movement',2),
-    array(4, 'Partha1','2010-10-09 00:00:00','Lama Shenpen responds to a student questions about a sense of movement','Lama Shenpen responds to a student questions about a sense of movement',4), // comes with ssd_example project.
-    array(5, 'Subojit1','2010-10-09 00:00:00','Lama Shenpen responds to a student questions about a sense of movement','Lama Shenpen responds to a student questions about a sense of movement',3),
-    array(6, 'Abhishek1','2010-10-09 00:00:00','Lama Shenpen responds to a student questions about a sense of movement','Lama Shenpen responds to a students questions about a sense of movement',2),
-    array(7, 'Partha2','2010-10-09 00:00:00','Lama Shenpen responds to a student questions about a sense of movement','Lama Shenpen responds to a student questions about a sense of movement',4), // comes with ssd_example project.
-    array(8, 'Subojit2','2010-10-09 00:00:00','Lama Shenpen responds to a student questions about a sense of movement','Lama Shenpen responds to a student questions about a sense of movement',5),
-    array(9, 'Abhishek2','2010-10-09 00:00:00','Lama Shenpen responds to a student questions about a sense of movement','Lama Shenpen responds to a students questions about a sense of movement',2),
-    
-  );
+  // Use high id numbers to avoid overwriting an existing node id. 
   foreach ($data as $row) {
     $query->values(array_combine($fields, $row));
   }
