@@ -194,7 +194,7 @@ function ssd_example_ssd_data_node() {
     $data[$i][1]=$obj1->title;
     $data[$i][2]=$obj1->dt_created;
     $data[$i][3]=$obj1->abstract;
-    $data[$i][4]=$obj1->article;
+    $data[$i][4]=$obj1->abstract ."<br><br>". $obj1->article;
     $data[$i][5]=1;
     $i+=1;
 
@@ -249,12 +249,13 @@ function ssd_example_ssd_data_topic_node() {
   $query = db_insert('ssd_example_ssd_topic_node')
     ->fields($fields);
   $data = array(
-    array(3, 'pilsner'),
-    array(3, 'red ale'),
-    array(2, 'red ale'),
+    array(82, 'pilsner'),
+    array(1726, 'red ale'),
+    array(92, 'red ale'),
   );
   foreach ($data as $row) {
     $query->values(array_combine($fields, $row));
   }
   $query->execute();
 }
+
